@@ -17,10 +17,14 @@ public class KitchenRegister {
 	@PersistenceContext
 	private EntityManager manager;
 	
-	public List<Kitchen> list() {
+	public List<Kitchen> findAll() {
 		TypedQuery<Kitchen> query = manager.createQuery("from Kitchen", Kitchen.class);
 		List<Kitchen> kitchens = query.getResultList();
 		return kitchens;
+	}
+	
+	public Kitchen findOne(Long id) {
+		return manager.find(Kitchen.class, id);
 	}
 	
 	@Transactional

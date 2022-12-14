@@ -16,7 +16,7 @@ public class KitchenSelectMain {
 				.run(args);
 		
 		KitchenRegister kitchenRegister = applicationContext.getBean(KitchenRegister.class);
-		List<Kitchen> kitchens = kitchenRegister.list();
+		List<Kitchen> kitchens = kitchenRegister.findAll();
 		for (Kitchen kitchen : kitchens) {
 			System.out.println(kitchen.getName());
 		}
