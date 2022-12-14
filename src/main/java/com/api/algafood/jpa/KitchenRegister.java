@@ -32,4 +32,9 @@ public class KitchenRegister {
 		return manager.merge(kitchen);
 	}
 	
+	@Transactional	
+	public void remove(Kitchen kitchen) {
+		kitchen = this.findOne(kitchen.getId());
+		manager.remove(kitchen);
+	}
 }
