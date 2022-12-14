@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.api.algafood.domain.model.Kitchen;
 
@@ -22,6 +23,7 @@ public class KitchenRegister {
 		return kitchens;
 	}
 	
+	@Transactional
 	public Kitchen create(Kitchen kitchen) {
 		return manager.merge(kitchen);
 	}
