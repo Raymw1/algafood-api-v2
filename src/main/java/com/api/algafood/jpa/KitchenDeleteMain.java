@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.api.algafood.AlgafoodApiV2Application;
 import com.api.algafood.domain.model.Kitchen;
+import com.api.algafood.domain.repository.KitchenRepository;
 
 public class KitchenDeleteMain {
 	public static void main(String[] args) {
@@ -13,9 +14,9 @@ public class KitchenDeleteMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-		KitchenRegister kitchenRegister = applicationContext.getBean(KitchenRegister.class);
+		KitchenRepository kitchenRepository = applicationContext.getBean(KitchenRepository.class);
 		Kitchen kitchen = new Kitchen();
 		kitchen.setId(1L);
-		kitchenRegister.remove(kitchen);
+		kitchenRepository.remove(kitchen);
 	}
 }

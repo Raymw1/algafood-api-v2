@@ -1,4 +1,4 @@
-package com.api.algafood.jpa;
+package com.api.algafood.infrastructure.repository;
 
 import java.util.List;
 
@@ -10,28 +10,33 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.api.algafood.domain.model.Kitchen;
+import com.api.algafood.domain.repository.KitchenRepository;
 
 @Component
-public class KitchenRegister {
+public class KitchenRepositoryImpl implements KitchenRepository {
 
 	@PersistenceContext
 	private EntityManager manager;
 	
+	@Override
 	public List<Kitchen> findAll() {
 		TypedQuery<Kitchen> query = manager.createQuery("from Kitchen", Kitchen.class);
 		List<Kitchen> kitchens = query.getResultList();
 		return kitchens;
 	}
 	
+	@Override
 	public Kitchen findOne(Long id) {
 		return manager.find(Kitchen.class, id);
 	}
 	
+	@Override
 	@Transactional
 	public Kitchen save(Kitchen kitchen) {
 		return manager.merge(kitchen);
 	}
 	
+	@Override
 	@Transactional	
 	public void remove(Kitchen kitchen) {
 		kitchen = this.findOne(kitchen.getId());

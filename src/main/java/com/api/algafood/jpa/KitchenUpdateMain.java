@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.api.algafood.AlgafoodApiV2Application;
 import com.api.algafood.domain.model.Kitchen;
+import com.api.algafood.domain.repository.KitchenRepository;
 
 public class KitchenUpdateMain {
 	public static void main(String[] args) {
@@ -13,11 +14,11 @@ public class KitchenUpdateMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-		KitchenRegister kitchenRegister = applicationContext.getBean(KitchenRegister.class);
+		KitchenRepository kitchenRepository = applicationContext.getBean(KitchenRepository.class);
 		Kitchen kitchen = new Kitchen();
 		kitchen.setId(1L);
 		kitchen.setName("Chinese");
-		kitchen = kitchenRegister.save(kitchen);
+		kitchen = kitchenRepository.save(kitchen);
 		System.out.printf("%d - %s\n", kitchen.getId(), kitchen.getName());
 	}
 }
