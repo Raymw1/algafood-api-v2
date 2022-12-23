@@ -8,8 +8,8 @@ import com.api.algafood.domain.model.City;
 
 @Repository
 public interface CityRepository {
-	List<CityRepository> findAll();
-	CityRepository findOne(Long id);
-	CityRepository save(City city);
+	List<City> findAll();
+	City findOne(Long id);
+	City save(City city);
 	void remove(City city);
 }
