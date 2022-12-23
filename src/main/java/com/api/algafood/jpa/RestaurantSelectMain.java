@@ -16,12 +16,12 @@ public class RestaurantSelectMain {
 
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApiV2Application.class)
-			.web(WebApplicationType.NONE)
-			.run(args);
+				.web(WebApplicationType.NONE).run(args);
 		RestaurantRepository restaurantRepository = applicationContext.getBean(RestaurantRepository.class);
 		List<Restaurant> restaurants = restaurantRepository.findAll();
 		for (Restaurant restaurant : restaurants) {
-			System.out.printf("Name: %s. Shipping Fee: %f\n", restaurant.getName(), restaurant.getShippingFee());
+			System.out.printf("Name: %s. Shipping Fee: %f. Kitchen: %s\n", restaurant.getName(),
+					restaurant.getShippingFee(), restaurant.getKitchen().getName());
 		}
 	}
 
