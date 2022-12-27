@@ -23,8 +23,4 @@ public class State {
 	
 	@Column(nullable = false)
 	private String name;
-	
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private City city;
 }
