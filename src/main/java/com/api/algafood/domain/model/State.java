@@ -8,12 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@JsonRootName("state")
 public class State {
 
 	@Id
@@ -21,6 +26,8 @@ public class State {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+//	@JsonIgnore
+	@JsonProperty("state_name")
 	@Column(nullable = false)
 	private String name;
 }
