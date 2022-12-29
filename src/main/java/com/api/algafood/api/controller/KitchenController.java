@@ -3,8 +3,10 @@ package com.api.algafood.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +27,18 @@ public class KitchenController {
 	private KitchenRepository kitchenRepository;
 	
 	@GetMapping
-	public List<Kitchen> list() {
-		return kitchenRepository.findAll();
+	public ResponseEntity<List<Kitchen>> list() {
+		List<Kitchen> kitchens = kitchenRepository.findAll();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.LOCATION, "http://localhost:3333/kitchens");
+		
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.headers(headers)
+//				.build()
+				.body(kitchens);
+//		return ResponseEntity.ok(kitchens);
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
