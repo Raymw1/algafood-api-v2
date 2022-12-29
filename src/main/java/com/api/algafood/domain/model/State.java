@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@JsonRootName("state")
+//@JsonRootName("state")
 public class State {
 
 	@Id
@@ -27,7 +27,7 @@ public class State {
 	private Long id;
 	
 //	@JsonIgnore
-	@JsonProperty("state_name")
+//	@JsonProperty("state_name")
 	@Column(nullable = false)
 	private String name;
 }
