@@ -36,7 +36,7 @@ public class KitchenService {
 	
 	public Kitchen update(Kitchen currentKitchen, Kitchen kitchen) {
 		BeanUtils.copyProperties(kitchen, currentKitchen, "id");
-		currentKitchen = kitchenRepository.save(currentKitchen);
+		currentKitchen = this.save(currentKitchen);
 		return currentKitchen;
 	}
 	

@@ -4,9 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.algafood.api.model.KitchensXmlWrapper;
 import com.api.algafood.domain.exception.UsingEntityException;
 import com.api.algafood.domain.model.Kitchen;
-import com.api.algafood.domain.repository.KitchenRepository;
 import com.api.algafood.domain.service.KitchenService;
 
 //@Controller
@@ -32,9 +29,6 @@ import com.api.algafood.domain.service.KitchenService;
 @RestController
 @RequestMapping("/kitchens")
 public class KitchenController {
-	
-	@Autowired
-	private KitchenRepository kitchenRepository;
 	
 	@Autowired
 	private KitchenService kitchenService;
