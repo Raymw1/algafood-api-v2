@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -76,5 +78,19 @@ public class KitchenController {
 		BeanUtils.copyProperties(kitchen, currentKitchen, "id");
 		currentKitchen = kitchenRepository.save(currentKitchen);
 		return ResponseEntity.ok(currentKitchen);
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> remove(@PathVariable Long id) {
+		try {
+			Kitchen kitchen = kitchenRepository.findOne(id);
+			if (kitchen == null) {
+				return ResponseEntity.notFound().build();
+			}
+			kitchenRepository.remove(kitchen);
+			return ResponseEntity.noContent().build();
+		} catch (DataIntegrityViolationException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 	}
 }
