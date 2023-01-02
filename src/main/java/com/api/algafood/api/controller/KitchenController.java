@@ -2,6 +2,8 @@ package com.api.algafood.api.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.algafood.api.model.KitchensXmlWrapper;
+import com.api.algafood.domain.exception.UsingEntityException;
 import com.api.algafood.domain.model.Kitchen;
 import com.api.algafood.domain.repository.KitchenRepository;
 import com.api.algafood.domain.service.KitchenService;
@@ -86,13 +89,11 @@ public class KitchenController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> remove(@PathVariable Long id) {
 		try {
-			Kitchen kitchen = kitchenService.findOne(id);
-			if (kitchen == null) {
-				return ResponseEntity.notFound().build();
-			}
-			kitchenService.remove(kitchen);
+			kitchenService.remove(id);
 			return ResponseEntity.noContent().build();
-		} catch (DataIntegrityViolationException e) {
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.notFound().build();
+		} catch (UsingEntityException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}

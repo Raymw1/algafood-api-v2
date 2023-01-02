@@ -11,5 +11,5 @@ public interface KitchenRepository {
 	List<Kitchen> findAll();
 	Kitchen findOne(Long id);
 	Kitchen save(Kitchen kitchen);
-	void remove(Kitchen kitchen);
+	void remove(Long id);
 }
