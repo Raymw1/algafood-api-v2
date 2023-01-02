@@ -48,7 +48,11 @@ public class KitchenController {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/{id}")
-	public Kitchen findOne(@PathVariable Long id) {
-		return kitchenRepository.findOne(id);
+	public ResponseEntity<Kitchen> findOne(@PathVariable Long id) {
+		Kitchen kitchen = kitchenRepository.findOne(id);
+		if (kitchen == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		return ResponseEntity.ok(kitchen);
 	}
 }
