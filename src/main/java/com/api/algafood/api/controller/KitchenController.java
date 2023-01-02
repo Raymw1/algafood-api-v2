@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.algafood.api.model.KitchensXmlWrapper;
 import com.api.algafood.domain.model.Kitchen;
 import com.api.algafood.domain.repository.KitchenRepository;
+import com.api.algafood.domain.service.KitchenService;
 
 //@Controller
 //@ResponseBody
@@ -32,9 +33,12 @@ public class KitchenController {
 	@Autowired
 	private KitchenRepository kitchenRepository;
 	
+	@Autowired
+	private KitchenService kitchenService;
+	
 	@GetMapping
 	public ResponseEntity<List<Kitchen>> list() {
-		List<Kitchen> kitchens = kitchenRepository.findAll();
+		List<Kitchen> kitchens = kitchenService.findAll();
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.LOCATION, "http://localhost:3333/kitchens");
@@ -49,13 +53,13 @@ public class KitchenController {
 	
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	public KitchensXmlWrapper listXml() {
-		return new KitchensXmlWrapper(kitchenRepository.findAll());
+		return new KitchensXmlWrapper(kitchenService.findAll());
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/{id}")
 	public ResponseEntity<Kitchen> findOne(@PathVariable Long id) {
-		Kitchen kitchen = kitchenRepository.findOne(id);
+		Kitchen kitchen = kitchenService.findOne(id);
 		if (kitchen == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -65,29 +69,28 @@ public class KitchenController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public Kitchen save(@RequestBody Kitchen kitchen) {
-		kitchen = kitchenRepository.save(kitchen);
+		kitchen = kitchenService.save(kitchen);
 		return kitchen;
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Kitchen> update(@PathVariable Long id, @RequestBody Kitchen kitchen) {
-		Kitchen currentKitchen = kitchenRepository.findOne(id);
+		Kitchen currentKitchen = kitchenService.findOne(id);
 		if (currentKitchen == null) {
 			return ResponseEntity.notFound().build();
 		}
-		BeanUtils.copyProperties(kitchen, currentKitchen, "id");
-		currentKitchen = kitchenRepository.save(currentKitchen);
+		currentKitchen = kitchenService.update(currentKitchen, kitchen);
 		return ResponseEntity.ok(currentKitchen);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> remove(@PathVariable Long id) {
 		try {
-			Kitchen kitchen = kitchenRepository.findOne(id);
+			Kitchen kitchen = kitchenService.findOne(id);
 			if (kitchen == null) {
 				return ResponseEntity.notFound().build();
 			}
-			kitchenRepository.remove(kitchen);
+			kitchenService.remove(kitchen);
 			return ResponseEntity.noContent().build();
 		} catch (DataIntegrityViolationException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
