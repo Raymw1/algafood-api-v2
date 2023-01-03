@@ -1,10 +1,10 @@
 package com.api.algafood.domain.exception;
 
-public class EntityNotFoundException extends Exception {
+public class MissingDataException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
-	public EntityNotFoundException(String message) {
+	public MissingDataException(String message) {
 		super(message);
 	}
 }
