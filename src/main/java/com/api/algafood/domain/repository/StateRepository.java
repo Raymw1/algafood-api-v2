@@ -11,5 +11,5 @@ public interface StateRepository {
 	List<State> findAll();
 	State findOne(Long id);
 	State save(State state);
-	void remove(State state);
+	void remove(Long id);
 }
