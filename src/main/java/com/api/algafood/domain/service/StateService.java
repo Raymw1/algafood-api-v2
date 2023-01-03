@@ -48,11 +48,11 @@ public class StateService {
 			
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntityNotFoundException(
-				String.format("Não existe um cadastro de cozinha com código %d", id));
+				String.format("State with id %d does not exist!", id));
 		
 		} catch (DataIntegrityViolationException e) {
 			throw new UsingEntityException(
-				String.format("Cozinha de código %d não pode ser removida, pois está em uso", id));
+				String.format("State with id %d can't be removed, because it's in use!", id));
 		}
 	}
 	
